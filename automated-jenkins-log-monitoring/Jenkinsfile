@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Upload Log to S3') {
+            steps {
+                sh '''
+                aws s3 cp /var/log/nginx/access.log s3://auto-backet/logs/$(basename /var/log/nginx/access.log)
+                '''
+            }
+        }
+
+        stage('Verify Upload') {
+            steps {
+                sh '''
+                aws s3 ls s3://auto-backet/logs/$(basename /var/log/nginx/access.log)
+                '''
+            }
+        }
+        stage('Clear Original Log') {
+          steps {
+        sh '''
+        echo "Clearing log file..."
+        sudo sh -c "cat /dev/null > /var/log/nginx/access.log"
+        '''
+        }
+      }
+
+    }
+
+    post {
+        success {
+            echo "Log uploaded & cleared successfully"
+        }
+        failure {
+            echo "Job failed"
+        }
+    }
+}
