@@ -1,34 +1,23 @@
 # Log files
 *.log
-logs/
-access.log
-error.log
-log_monitor.log
 
-# Temporary files
-*.tmp
-*.temp
-
-# Environment variables (credentials)
+# Environment files
 .env
 .env.*
 
+# Credentials
+credentials
+secrets
+*.key
+*.pem
+
 # AWS credentials
 .aws/
-credentials
 
-# Jenkins workspace
-workspace/
+# IDE files
+.vscode/
+.idea/
 
 # OS files
 .DS_Store
 Thumbs.db
-
-# IDE settings
-.vscode/
-.idea/
-
-# Python (if used)
-venv/
-__pycache__/
-*.pyc
